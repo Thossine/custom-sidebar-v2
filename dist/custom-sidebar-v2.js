@@ -1,5 +1,5 @@
 /**
- * updated 30-12-17 23:59
+ * updated 02-02-24
  * ----------------------------------
  * Custom Sidebar for Home Assistant
  * ----------------------------------
@@ -19,7 +19,7 @@
   !window.$customSidebarV2 &&
     (window.$customSidebarV2 = { tryCounter: 0, Loaded: false });
 
-  const ver = '301217_2359';
+  const ver = '301217_2360';
 
   let runInterval;
 
@@ -105,11 +105,11 @@
     root = root && root.shadowRoot;
     root = root && root.querySelector('home-assistant-main');
     root = root && root.shadowRoot;
-    const drawerLayout = root && root.querySelector('app-drawer-layout');
+    const drawerLayout = root && root.querySelector('ha-drawer');
     !drawerLayout &&
       log(
         'warn',
-        'Cannot find "home-assistant home-assistant-main app-drawer-layout" element'
+        'Cannot find "home-assistant home-assistant-main ha-drawer" element'
       );
 
     return (window.$customSidebarV2.DrawerLayoutElement = drawerLayout);
@@ -121,7 +121,7 @@
     }
     const drawerLayout = getDrawerLayout();
     let sidebar =
-      drawerLayout && drawerLayout.querySelector('app-drawer ha-sidebar');
+      drawerLayout && drawerLayout.querySelector('ha-drawer ha-sidebar');
     sidebar = sidebar && sidebar.shadowRoot;
     window.$customSidebarV2.TitleElement =
       sidebar && sidebar.querySelector('.title');
@@ -134,6 +134,8 @@
   }
 
   function getSidebarItem(root) {
+    // FIXME: Find a way to achieve this on newer versions 
+      return true;
     if (window.$customSidebarV2.SidebarItemElement) {
       return window.$customSidebarV2.SidebarItemElement;
     }
@@ -425,10 +427,14 @@
   function run() {
     try {
       window.$customSidebarV2.DrawerLayoutElement = getDrawerLayout();
+      //log('log', 'Tried loading window.$customSidebarV2.DrawerLayoutElement', window.$customSidebarV2.DrawerLayoutElement);
       window.$customSidebarV2.SideBarElement = getSidebar();
+      //log('log', 'Tried loading window.$customSidebarV2.SideBarElement', window.$customSidebarV2.SideBarElement);
       window.$customSidebarV2.SidebarItemElement =
         window.$customSidebarV2.SideBarElement &&
         getSidebarItem(window.$customSidebarV2.SideBarElement);
+      //log('log', 'Tried loading window.$customSidebarV2.SidebarItemElement', window.$customSidebarV2.SidebarItemElement);
+      //log('log', 'getSidebarItem(window.$customSidebarV2.SideBarElement)', getSidebarItem(window.$customSidebarV2.SideBarElement));
 
       if (
         window.$customSidebarV2.SideBarElement &&
